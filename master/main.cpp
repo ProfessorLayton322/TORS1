@@ -8,7 +8,8 @@
 #include <sys/socket.h>
 #include <sys/select.h>
 
-const char message[] = "HELLO WORLD\n";
+const char ping[] = "HELLO";
+const char ack[] = "ACK";
 
 int main(int argc, char* argv[]) {
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
@@ -25,6 +26,7 @@ int main(int argc, char* argv[]) {
         &soBroadcast,
         sizeof soBroadcast)) {
         perror("setsockopt error");
+        return -1;
     }
 
     struct sockaddr_in broadcastAddr;
@@ -41,7 +43,7 @@ int main(int argc, char* argv[]) {
     double right;
     sscanf(rightEnv, "%lf", &right);
 
-    sendto(sock, message, sizeof(message), 0, (struct sockaddr*) &broadcastAddr, sizeof(broadcastAddr));
+    sendto(sock, ping, sizeof(ping), 0, (struct sockaddr*) &broadcastAddr, sizeof(broadcastAddr));
 
     while (true) {
     }

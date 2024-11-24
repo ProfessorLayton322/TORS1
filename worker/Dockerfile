@@ -1,6 +1,13 @@
 FROM ubuntu:latest
 
+WORKDIR /worker
+
 RUN apt update
 RUN apt install netcat-openbsd -y
+RUN apt install build-essential -y
 
-ENTRYPOINT nc -luk -p 12101
+COPY main.cpp .
+
+RUN g++ main.cpp -o worker 
+
+ENTRYPOINT ./worker
