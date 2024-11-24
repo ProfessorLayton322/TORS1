@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  worker1:
+    build: ./worker
+  worker2:
+    build: ./worker
+  master:
+    build: ./master
+    environment:
+      LEFT: -5.0
+      RIGHT: 6.0
+    depends_on:
+      - worker1
+      - worker2
